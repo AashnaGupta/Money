@@ -1,0 +1,74 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args){
+	    System.out.println(moneyToString(10, 24));
+        printSum(10, 24, 3, 90);
+        System.out.println(biggestMoney(10,24,3,90,1,23));
+        printChangeFrom20(5, 12);
+    }
+
+    //moneyToString function converts integers to a String of money value with a dollar sign and decimal point
+    public static String moneyToString (int d,int c){
+        if (c==0)//conditional to check if change=0 for printChangeFrom20 function, so that it will not print $d.100
+            return ("$" + d + ".00");
+        else if(c<10)
+            return ("$" + d + ".0" + c);
+        else
+            return ("$" + d + "." + c);
+    }//End moneyToString
+    // Returns the Money as words. Ex, moneyToString(10,24) => "$10.24"
+
+    //Adds the two dollar amounts together and the two cents amount together. Subtracts 100 from cents to create one dollar if cents is over 100.
+    public static void printSum(int d1, int c1, int d2, int c2){
+        int totalD = d1 + d2;//10+3= 13
+        int totalC = c1 + c2;//24+90= 144
+        for(int i=99; i<100; i++){//iterates through the for loop only one time so that the conditional is checked
+            if(totalC >= 100) {
+                totalC = totalC - 100;//subtracts 100 cents and converts to +$1
+                totalD = totalD + 1;
+            }
+        }
+        System.out.println(moneyToString(totalD,totalC));
+        //Prints the sum of the money.
+    }//End printSum
+
+    //Returns which money value is the biggest.
+    public static  int biggestMoney(int d1, int c1, int d2, int c2, int d3, int c3){
+        //1. initialize return values
+        int returnValue = 0;
+        //2.total up each of the values
+        int totalD1 = d1* 100+c1;
+        int totalD2 = d2* 100+c2;
+        int totalD3 = d3* 100+c3;
+        //3. make comparisons using conditionals
+        if(totalD1 > totalD2 && totalD1 > totalD3)
+            returnValue = 1;
+        else if(totalD2 > totalD3 && totalD2 > totalD1)
+            returnValue = 2;
+        else
+            returnValue = 3;
+        //return your returnValue
+        return returnValue;
+    }//end biggestMoney
+
+    //You may assume you always pay with $20, you always owe a positive amount that is <= $20.
+    //amount of change a person should receive if they pay with a $20 bill
+    public static void printChangeFrom20(int d, int c){
+
+        int changeD = 0;//initialize return value
+        int changeC= 0;//initialize return value
+        int payed = 20; // payed with a $20 bill
+        if (c!= 0) {
+            changeD = payed - d - 1;//if cents is greater than zero, 1 extra dollar will be subtracted from the total change
+            changeC = 100 - c;//number of cents will be added to the total change output of the previous line
+        }
+        else {
+            changeD = payed - d;//cents is equal to zero so there is no need to subtract an extra dollar
+        }
+        System.out.println(moneyToString(changeD,changeC));
+    }//end printChangeFrom20
+    //total change amount is printed
+
+}
